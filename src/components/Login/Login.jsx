@@ -1,36 +1,37 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState } from "react";
 
-import './Login.css'
-import { AuthContext } from './../../providers/AuthProvider';
+import { useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "./../../providers/AuthProvider";
+import "./Login.css";
 
 const Login = () => {
+	const [error, setError] = useState("");
 
-    const [error, setError] = useState('')
-    
-    const {signIn}= useContext(AuthContext)
+	const { signIn } = useContext(AuthContext);
+	const navigate = useNavigate();
+	const location = useLocation();
 
-    const handleLogin = (event) => {
-        event.preventDefault()
-        const form = event.target
-        
-        const email = form.email.value;
-        const password = form.password.value
+	 const from = location.state?.from?.pathname || "/";
+	const handleLogin = (event) => {
+		event.preventDefault();
+		const form = event.target;
 
-        signIn(email, password)
+		const email = form.email.value;
+		const password = form.password.value;
+
+		signIn(email, password)
 			.then((userCredential) => {
-				// Signed in
 				const user = userCredential.user;
-                // ...
-                
-                console.log(user)
+
+				form.reset();
+				 navigate(from, { replace: true });
 			})
 			.catch((error) => {
 				const errorCode = error.code;
 				const errorMessage = error.message;
 			});
-        
-    }
-    return (
+	};
+	return (
 		<div className="form-container">
 			<h2 className="form-title">Login</h2>
 			<form onSubmit={handleLogin}>
