@@ -1,9 +1,23 @@
 import React from 'react';
 
+import './Login.css'
+
 const Login = () => {
     return (
-        <div>
-            <h2>Login coming sooon</h2>
+        <div className='form-container'>
+            <h2 className='form-title'>Login</h2>
+            <form action="">
+                <div className="form-control">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="email" id="" required />
+                </div>
+                <div className="form-control">
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" id="" required />
+                </div>
+
+                <input type="submit" className='btn-submit' value="Login" />
+            </form>
         </div>
     );
 };
